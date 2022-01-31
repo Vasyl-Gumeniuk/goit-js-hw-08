@@ -6,7 +6,10 @@ const inputRefs = {
     textarea: document.querySelector('.feedback-form textarea'),
 }
 const FORM_CURRENT_VALUE = "feedback-form-state";
-const userData = {};
+const userData = {
+    email: '',
+    message: '',
+};
 
 
 form.addEventListener('submit', cleanSubmitForm);
