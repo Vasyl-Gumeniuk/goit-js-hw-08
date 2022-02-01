@@ -6,7 +6,6 @@ const inputRefs = {
     textarea: document.querySelector('.feedback-form textarea'),
 }
 const FORM_CURRENT_VALUE = "feedback-form-state";
-const userData = {};
 
 
 form.addEventListener('submit', cleanSubmitForm);
@@ -17,45 +16,29 @@ checkSubmitForm();
 
 function cleanSubmitForm(e) {
     e.preventDefault();
+    const savedData = localStorage.getItem(FORM_CURRENT_VALUE);
+    const parsedSavedData = JSON.parse(savedData);
+    console.log(parsedSavedData);
+
     e.currentTarget.reset();
-    localStorage.removeItem("FORM_CURRENT_VALUE");
-    console.log(userData);
+    localStorage.removeItem(FORM_CURRENT_VALUE);
 }
 
 function inputData(e) {
-    userData[e.target.name] = e.target.value;
-    localStorage.setItem("FORM_CURRENT_VALUE", JSON.stringify(userData));
-    console.log(userData);
+    const userData = {
+    email: inputRefs.input.value,
+    message: inputRefs.textarea.value,
+    };
+    
+    localStorage.setItem(FORM_CURRENT_VALUE, JSON.stringify(userData));
 }
 
 function checkSubmitForm(e) {
-    const savedData = localStorage.getItem("FORM_CURRENT_VALUE");
+    const savedData = localStorage.getItem(FORM_CURRENT_VALUE);
     const parsedSavedData = JSON.parse(savedData);
 
     if (savedData) {
-        inputRefs.input.value = parsedSavedData.email;
-        inputRefs.textarea.value = parsedSavedData.message;
+        inputRefs.input.value = parsedSavedData.email || "";
+        inputRefs.textarea.value = parsedSavedData.message || "";
     }
 }
-
-
-
-
-
-
-//         if (savedData) {
-//             checkEmail();
-//             checkMessage();
-//         }
-//     function checkEmail() {
-//         if (parsedSavedData.email !== undefined) {
-//             inputRefs.input.value = parsedSavedData.email;
-//         } return
-//     };
-
-//     function checkMessage() {
-//         if (parsedSavedData.message !== undefined) {
-//             inputRefs.textarea.value = parsedSavedData.message;
-//             } return
-//     };
-// };
